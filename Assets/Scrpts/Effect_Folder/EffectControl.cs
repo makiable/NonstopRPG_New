@@ -4,7 +4,7 @@ using System.Collections;
 public class EffectControl : EffectControl_World {
 
 	//프라이빗 게임메니저에서 이팩트를 컨트롤 한다.
-	private In_GameManager mIn_GameManager;
+	public In_GameManager mIn_GameManager;
 
 	public Animator mEffectAnimator;
 

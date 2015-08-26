@@ -15,6 +15,9 @@ public class In_GameManager : MonoBehaviour {
 	//모든 이팩트 컨트롤.
 	public EffectControl_World totalEffectControl;
 
+	//노말 공격 컨트롤
+	public Skill_normal_Attack mNormalSkill;
+
 	//텍스트 메세지.
 	public TextMesh mIngTextMassage;
 	
@@ -132,7 +135,7 @@ public class In_GameManager : MonoBehaviour {
 		
 		mMonster01[idx].idx = idx;
 		mMonster01[idx].RandomHP();//
-		mMonster01 [idx].monsterHPtext.text = mMonster01 [idx].mHP.ToString ();
+		mMonster01[idx].hptext.text = mMonster01[idx].mHP.ToString ();
 
 		mMonster01 [idx].TargetNumber = idx+1;
 		monster.name = "Monster01"+idx;
@@ -147,18 +150,21 @@ public class In_GameManager : MonoBehaviour {
 
 		while (mStageStatus == StageStatus.Battle) {
 			//공격 애니메이션 추가.
-			mHero01.SetStatus(HeroControl.Status.Attack);
 
-			//실제로 데미지도 들어가야함. (애니메이션은 내용에 포함)
-			TargetMonster.Damaged();
-
-			//이팩트틑 여기서 관리.
-			totalEffectControl.On_Effect(TargetMonster.transform, "hit_Effect");
+			//노말 공격 -> 애니메이션 까지  끝냄. ㅋㅋㅋ
+			mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mOrinAttackPower), TargetMonster);
 
 			//한번 공격하고 공격 속도 만큼 멈춘다.
 			yield return new WaitForSeconds(mHero01.mAttackSpeed);
 		}
 	}
+
+	public int GetRandomDamage(int damage){
+		return damage + Random.Range(-10, 10);
+	}
+
+
+
 
 	IEnumerator HeroSkillAttack(){
 		GetAllAutoTarget ();
@@ -167,17 +173,17 @@ public class In_GameManager : MonoBehaviour {
 			mHero01.SetStatus(HeroControl.Status.UseSkill);
 
 			if (mMonster01[0] != null) {
-				mMonster01[0].Damaged();
+			//	mMonster01[0].Damaged();
 				Debug.Log("몬스터 0에게 데미지 ="+mMonster01[0].saveDamageTextForShow);
 			}
 
 			if (mMonster01[1] != null) {
-				mMonster01[1].Damaged();
+			//	mMonster01[1].Damaged();
 				Debug.Log("몬스터 1에게 데미지 ="+mMonster01[1].saveDamageTextForShow);
 			}
 
 			if (mMonster01[2] != null) {
-				mMonster01[2].Damaged();
+			//	mMonster01[2].Damaged();
 				Debug.Log("몬스터 1에게 데미지 ="+mMonster01[2].saveDamageTextForShow);
 			}
 
@@ -248,10 +254,14 @@ public class In_GameManager : MonoBehaviour {
 
 			foreach (MonsterControl monster in mMonster01) { //모든 몬스터를 하나씩 돌린다..
 				if (monster.mStatus == MonsterControl.Status.Dead) continue;
-				monster.mAnimator.SetTrigger("Attack");
 
-				mHero01.heroAttackedMonsterNormal(monster.mAttack);
-				totalEffectControl.On_Effect(mHero01.transform, "hit_Effect");
+				//노말 공격 -> 애니메이션 까지  끝냄. ㅋㅋㅋ
+				mNormalSkill.normalHit(monster, GetRandomDamage(monster.mAttack), mHero01);
+
+				//monster.mAnimator.SetTrigger("Attack");
+
+				//mHero01.heroAttackedMonsterNormal(monster.mAttack);
+				//totalEffectControl.On_Effect(mHero01.transform, "hit_Effect");
 
 
 				yield return new WaitForSeconds(monster.mAttackSpeed + Random.Range(0, 0.5f));
