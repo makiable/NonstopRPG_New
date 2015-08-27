@@ -29,7 +29,6 @@ public class MonsterControl : Character {
 
 	void Start () {
 
-
 		// 참조해야할 객체나 스크립트들을 여기서 설정하게 될 것입니다.
 		mIn_GameManager = In_GameManager.FindObjectOfType<In_GameManager>();
 
@@ -42,7 +41,6 @@ public class MonsterControl : Character {
 		//Archer의 Animator 컴포넌트 레퍼런스를 가져옵니다.
 		//이 script가 붙은 gameObject에 Animator를 가져옴.
 		mAnimator = gameObject.GetComponent<Animator> ();
-
 	}
 
 	//상테와 파라메터를 통해 아처의 상태를 컨트롤 합니다.
@@ -129,82 +127,13 @@ public class MonsterControl : Character {
 		AllTargeted = false;
 		mAnimator.SetTrigger("Dead");
 		TargetNumber = -1; //더이상 타겟이 아님요...
-		Debug.Log("Dead");
+		Debug.Log("Dead ->"+gameObject.name);
 		mIn_GameManager.ReAutoTarget();
 	}
 
-
-
-	//public void Damaged()
-	//{
-	//	Debug.Log ("monster hitted");
-	//	GameObject Hero = GameObject.Find ("Hero");
-	//	HeroControl mHeroControl = Hero.GetComponent<HeroControl> ();
-	//	saveDamageTextForShow = mHeroControl.GetRandomDamage ();
-	//	mIn_GameManager.mIngTextMassage.text = "적에게 데미지:" + saveDamageTextForShow + "를 주었다.";
-
-	//	mHP -= saveDamageTextForShow;
-
-	//	monsterHPtext.text = mHP.ToString ();
-
-	//	mAnimator.SetTrigger ("Damaged");
-
-	//	Debug.Log ("last hp ="+mHP);
-		
-		// 사망처리
-	//	if(mHP <= 0)
-	//	{
-	//		mStatus = Status.Dead;
-	//		mHP = 0;
-	//		mIn_GameManager.mIngTextMassage.text = "적을 물리쳤다.";
-	//		SingleTargeted = false;
-	//		AllTargeted = false;
-	//		mAnimator.SetTrigger("Dead");
-	//		TargetNumber = -1; //더이상 타겟이 아님요...
-	//		Debug.Log("Dead");
-	//		mIn_GameManager.ReAutoTarget();
-			//Destroy(gameObject, 0.5f);
-	//	}
-	//}
-
 	void destroy(){
 		Destroy (gameObject);
+		//mIn_GameManager.mMonsterCount -= 1;
+		Debug.Log ("mMonsterCount = " + mIn_GameManager.mMonsterCount);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

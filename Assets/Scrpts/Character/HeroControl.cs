@@ -108,8 +108,6 @@ public class HeroControl : Character {
 
 		hptext.text = mHP.ToString ();
 
-
-
 		if (mHP > 0) {
 			mAnimator.SetTrigger("Damaged");
 		}
