@@ -58,6 +58,9 @@
      <Compile Include="Assets\Scrpts\MouseEventCatcher.cs" />
      <Compile Include="Assets\Scrpts\Simple_Button_Input.cs" />
      <Compile Include="Assets\Scrpts\Skill_normal_Attack.cs" />
+     <Compile Include="Assets\Scrpts\Weapon\All_Weapon_World.cs" />
+     <Compile Include="Assets\Scrpts\Weapon\Weapon_Basic_Info.cs" />
+     <Compile Include="Assets\Scrpts\Weapon\move_Script.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

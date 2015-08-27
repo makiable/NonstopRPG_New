@@ -27,7 +27,6 @@ public class MonsterControl : Character {
 	[HideInInspector]
 	public int TargetNumber;
 
-
 	void Start () {
 
 
@@ -105,6 +104,7 @@ public class MonsterControl : Character {
 
 	public void AttackTest(){
 		mAnimator.SetTrigger("Attack");
+		mWeapon_Prefab.viewWeapon (weapon_View_tranform.transform, mWeapon_Prefab.prefabName);
 	}
 
 	public void DamagedTest(int damage){

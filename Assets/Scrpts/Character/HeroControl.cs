@@ -5,9 +5,7 @@ public class HeroControl : Character {
 
 	//mAnimator를 선언.
 	private Animator mAnimator;
-
-
-
+	
 	//공격 데미지 (현제는 걍 데미지만.. 나중에 공격력이랑 수정 필요)
 	public int mOrinAttackPower;
 	[HideInInspector]
@@ -29,7 +27,9 @@ public class HeroControl : Character {
 
 		//1.HP 넣고, 2. 백그라운드 컴퍼넌트 넣고, 3. 활이 발사될 장소를 넣고. 스타트
 		mHP = mOrinHP;
-		mAttackPower = mOrinAttackPower;
+
+		//무기 데미지 + 본인 데미지.
+		mAttackPower = mOrinAttackPower + mWeapon_Prefab.damage;
 
 		hptext.text = mHP.ToString ();
 
@@ -80,6 +80,8 @@ public class HeroControl : Character {
 
 	public void AttackTest(){
 		mAnimator.SetTrigger("Attack");
+		mWeapon_Prefab.viewWeapon (weapon_View_tranform.transform, mWeapon_Prefab.prefabName);
+
 	}
 
 	public void DamagedTest(int damage){

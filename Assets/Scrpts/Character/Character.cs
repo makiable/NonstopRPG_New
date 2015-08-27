@@ -4,11 +4,7 @@ using System.Collections;
 public class Character : MonoBehaviour {
 
 	public In_GameManager mIn_GameManager;
-	
-	//mAnimator를 선언.
-	private Animator mAnimator;
-	
-	//히어로 의 공격력, 채력, 공격 속도에 사용 될 변수.
+		
 	// HP
 	public int mOrinHP;
 	[HideInInspector]
@@ -40,6 +36,11 @@ public class Character : MonoBehaviour {
 	//hideinspector를 선언합니다.
 	[HideInInspector]
 	public Status mStatus = Status.Idle; //히이로의 기본상태를 idle로 설정.
+
+	//무기는 여기서 관리.
+	public Weapon_Basic_Info mWeapon_Prefab;
+	public Transform weapon_View_tranform;
+
 	
 
 }

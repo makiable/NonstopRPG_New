@@ -152,7 +152,7 @@ public class In_GameManager : MonoBehaviour {
 			//공격 애니메이션 추가.
 
 			//노말 공격 -> 애니메이션 까지  끝냄. ㅋㅋㅋ
-			mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mOrinAttackPower), TargetMonster);
+			mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower), TargetMonster);
 
 			//한번 공격하고 공격 속도 만큼 멈춘다.
 			yield return new WaitForSeconds(mHero01.mAttackSpeed);
@@ -257,12 +257,6 @@ public class In_GameManager : MonoBehaviour {
 
 				//노말 공격 -> 애니메이션 까지  끝냄. ㅋㅋㅋ
 				mNormalSkill.normalHit(monster, GetRandomDamage(monster.mAttack), mHero01);
-
-				//monster.mAnimator.SetTrigger("Attack");
-
-				//mHero01.heroAttackedMonsterNormal(monster.mAttack);
-				//totalEffectControl.On_Effect(mHero01.transform, "hit_Effect");
-
 
 				yield return new WaitForSeconds(monster.mAttackSpeed + Random.Range(0, 0.5f));
 			}
