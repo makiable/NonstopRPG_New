@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 public class In_GameManager : MonoBehaviour {
 
+	//플레이어 돈 스크립트..
+	public PlayerLocal_info mPlayerLocal_info;
+
 	//히어로 컨트롤.
 	public HeroControl mHero01;
 
@@ -42,6 +45,10 @@ public class In_GameManager : MonoBehaviour {
 	// 얼마만큼 뛰다가 적을 만날 것인지.
 	//private float mRunTime = 1.8f;
 
+	//몬스터가 드랍하는 골드 설정..
+	public ulong monsterDropGold;
+
+
 
 	public enum StageStatus
 	{
@@ -62,6 +69,7 @@ public class In_GameManager : MonoBehaviour {
 		mMonster01.Clear();
 		// 던전 탐험 스텝을 만들어서 순서대로 순환시킵니다.
 		StartCoroutine ("AutoStep");
+
 	}
 	
 	// Update is called once per frame
@@ -79,7 +87,7 @@ public class In_GameManager : MonoBehaviour {
 				//스타트 TEXT 출현..
 				mIngTextMassage.text = "스타트!";
 
-				yield return new WaitForSeconds (1.2f);
+				yield return new WaitForSeconds (0.5f);
 
 				mStageStatus = StageStatus.BattleIdle;
 
@@ -94,7 +102,7 @@ public class In_GameManager : MonoBehaviour {
 					SpawnMonster(i);
 
 					//딜레이를 둔다. for 문에 딜레이를 줌.
-					yield return new WaitForSeconds(0.12f);
+					yield return new WaitForSeconds(0.5f);
 				}
 
 				yield return new WaitForSeconds(2); // 2초 대기..
@@ -221,6 +229,8 @@ public class In_GameManager : MonoBehaviour {
 
 		mMonsterCount -= 1;
 
+
+
 		if (mMonsterCount == 0) {
 			//한 스테이지 클리어 
 			StopCoroutine ("HeroAutoAttack");
@@ -228,6 +238,8 @@ public class In_GameManager : MonoBehaviour {
 
 			mLoopCount -= 1;
 			//mIngTextMassage.text = "모든 적을 격파";
+
+
 
 			if (mLoopCount == 0) {
 				//모든 스테이지 클리어. -> 승리 결과창.

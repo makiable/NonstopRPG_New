@@ -132,6 +132,7 @@ public class MonsterControl : Character {
 	}
 
 	void destroy(){
+
 		Destroy (gameObject);
 		//mIn_GameManager.mMonsterCount -= 1;
 		Debug.Log ("mMonsterCount = " + mIn_GameManager.mMonsterCount);
