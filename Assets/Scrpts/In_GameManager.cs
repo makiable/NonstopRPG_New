@@ -34,7 +34,7 @@ public class In_GameManager : MonoBehaviour {
 	public Transform[] mSpwanPoint;
 	
 	// 던전을 탐험하는 횟수입니다.
-	private int mLoopCount = 2;
+	public int mLoopCount;
 	
 	// 화면에 나타난 적의 합
 	public int mMonsterCount = 0;
@@ -160,6 +160,23 @@ public class In_GameManager : MonoBehaviour {
 		return damage + Random.Range(-10, 10);
 	}
 
+	public void TapAttack(){ //모든 적을 공격하는 광역 공격.
+		
+		StopCoroutine("HeroAutoAttack");
+
+		Debug.Log ("사용 전 현재 몇마리 남음? = "+mMonsterCount);
+		
+		while (mStageStatus == StageStatus.Battle) {
+			GetSingleAutoTarget ();
+			mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower), TargetMonster);
+			Debug.Log("TapAttack");
+
+			break;
+		}
+		Invoke ("WaitAndStartCoroutine", 0.5f);
+	}
+
+
 
 
 	public void HeroSkillAttack01(){ //모든 적을 공격하는 광역 공격.
@@ -193,8 +210,11 @@ public class In_GameManager : MonoBehaviour {
 		//1. HP로 소팅할 경우 이거 참조..
 		//TargetMonster = mMonster01.Where(m=>m.mHP > 0).OrderBy(m=>m.mHP).First();
 		//2. 타겟 넘버를 지정 맨 앞에 를 타겟으로 잡는다.
-		TargetMonster = mMonster01.Where (m => m.TargetNumber > 0).OrderBy (m => m.TargetNumber).First ();
-		TargetMonster.SetSingleTarget ();
+		if (mStageStatus == StageStatus.Battle) {
+			TargetMonster = mMonster01.Where (m => m.TargetNumber > 0).OrderBy (m => m.TargetNumber).First ();
+			TargetMonster.SetSingleTarget ();
+		} else
+			Debug.Log ("not in battle");
 	}
 
 	public void ReAutoTarget(){
@@ -214,7 +234,7 @@ public class In_GameManager : MonoBehaviour {
 
 				mIngTextMassage.text = "스테이지 클리어!";
 
-				//Invoke ("GameOver", 2);
+				mStageStatus = StageStatus.Clear;
 				GameOver();
 				return;
 			}
@@ -287,6 +307,9 @@ public class In_GameManager : MonoBehaviour {
 		}
 		if (trigger == "SkillAllDamage") {
 			HeroSkillAttack01();
+		}
+		if (trigger == "TapAttack") {
+			TapAttack();
 		}
 		
 	}
