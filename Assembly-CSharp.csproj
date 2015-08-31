@@ -50,6 +50,7 @@
      <Compile Include="Assets\Scrpts\Character\Character.cs" />
      <Compile Include="Assets\Scrpts\Character\HeroControl.cs" />
      <Compile Include="Assets\Scrpts\Character\MonsterControl.cs" />
+     <Compile Include="Assets\Scrpts\Character\PlayerData.cs" />
      <Compile Include="Assets\Scrpts\Effect_Folder\EffectControl.cs" />
      <Compile Include="Assets\Scrpts\Effect_Folder\EffectControl_World.cs" />
      <Compile Include="Assets\Scrpts\In_GameManager.cs" />
@@ -63,8 +64,14 @@
      <Compile Include="Assets\Scrpts\Weapon\Weapon_Basic_Info.cs" />
      <Compile Include="Assets\Scrpts\Weapon\move_Script.cs" />
      <Compile Include="Assets\Scrpts\XML\GameManager.cs" />
+     <Compile Include="Assets\Scrpts\XML\ReadTest.cs" />
+     <Compile Include="Assets\Scrpts\XML\RecItem.cs" />
+     <Compile Include="Assets\Scrpts\XML\WriteTest.cs" />
      <Compile Include="Assets\Scrpts\XML\test_xml.cs" />
+     <Compile Include="Assets\Scrpts\XML\xmltest02.cs" />
      <None Include="Assets\Resources\xml_Test_01.xml" />
+     <None Include="Assets\OUTPUT\itemList_Attribute.xml" />
+     <None Include="Assets\Resources\itemList_Attribute.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

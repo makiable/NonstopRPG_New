@@ -1,9 +1,15 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Desktop\test_xml\xml_TEst\Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scrpts\In_GameManager.cs">
     <Files>
-      <File FileName="..\..\..\Desktop\test_xml\xml_TEst\Assets\Scrpts\GameManager.cs" Line="1" Column="1" />
-      <File FileName="..\..\..\Desktop\test_xml\xml_TEst\Assets\Editor\CrossPlatformInput\CrossPlatformInputInitialize.cs" Line="11" Column="11" />
+      <File FileName="Assets\Scrpts\Character\MonsterControl.cs" Line="143" Column="4" />
+      <File FileName="Assets\Scrpts\In_GameManager.cs" Line="287" Column="7" />
+      <File FileName="Assets\Scrpts\Character\HeroControl.cs" Line="102" Column="31" />
+      <File FileName="Assets\Scrpts\Weapon\All_Weapon_World.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scrpts\Weapon\move_Script.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scrpts\Weapon\Weapon_Basic_Info.cs" Line="23" Column="3" />
+      <File FileName="Assets\Scrpts\AllSkill_World.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scrpts\Skill_normal_Attack.cs" Line="32" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

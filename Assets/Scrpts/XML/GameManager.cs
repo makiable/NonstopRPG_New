@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
 		Xml_Load (_filename);
 		UpdateXml ();
 
+		//Xml_Load (_filename);
 	}
 	
 	// Update is called once per frame
@@ -45,11 +46,11 @@ public class GameManager : MonoBehaviour {
 			string name02 = name [1].InnerText;
 			Debug.Log ("name01 = " + name01 + "name02 = " + name02);
 
+
 			//전체 가져오기..
 			XmlNodeList nodes = xmldoc.SelectNodes ("dataroot/Node");
 
 			//string s = "";
-
 			foreach (XmlNode node in nodes) {
 				Debug.Log ("ID: " + node.SelectSingleNode ("ID").InnerText);
 				Debug.Log ("NAME: " + node.SelectSingleNode ("NAME").InnerText);
@@ -62,8 +63,6 @@ public class GameManager : MonoBehaviour {
 			Debug.Log ("file not exist");
 
 	}
-
-
 
 	public void UpdateXml()
 	{
@@ -81,34 +80,50 @@ public class GameManager : MonoBehaviour {
 			xmldoc.LoadXml (textAsset.text);
 			//xml 생성.
 
-
-			//transforms 아래 모든 하위 노드 받다
-			XmlNodeList nodeList = xmldoc.SelectNodes("dataroot/Node");
-			//XmlNodeList nodeList = xmldoc.SelectSingleNode("Node").ChildNodes;
-
-			//사이를 옮겨다니기 모든 하위 노드
-			foreach(XmlElement xe in nodeList)
-			{
-				//받은 노드 중 속성 ID =1 있는 노드
-				if(xe.GetAttribute("id")=="1")
-				{
-					//업데이트 노드 속성
-					xe.SetAttribute("id","1000");
-					//계속 사이를 옮겨다니기
-					foreach(XmlElement x1 in xe.ChildNodes)
-					{
-						if(x1.Name=="GOLD")
-						{
-							//여기가 수정 노드 이름 대응 수만은 때문에 위의 받은 노드 연대 속성. . .
-							x1.InnerText="10000";
-
-
-						}
-						
-					}
-					break;
+			int a = 3;
+			if (a == 1) {
+				//노드를 이용해서 세이브..전체 가져오기..
+				XmlNodeList nodes = xmldoc.SelectNodes ("dataroot/Node");
+				foreach (XmlNode node in nodes) { //이건 노드로 접근해서 하는 방법. 고속 열거..
+					
+					node.SelectSingleNode("ID").InnerText = "3";
+					node.SelectSingleNode("NAME").InnerText = "3";
+					node.SelectSingleNode("LEVEL").InnerText = "3";
+					node.SelectSingleNode("GOLD").InnerText = "3";
+					node.SelectSingleNode("MONSTERKILLCOUNT").InnerText = "3";		
 				}
 			}
+			else if ( a == 2) {
+				//여기에서는 엘리맨드로 접근 하는 벙법을 만들어 보자..
+				//각 요소 별로 가져오기.
+
+				XmlNodeList name = xmldoc.GetElementsByTagName ("NAME"); //이름항목들을 배열로 만들어서 가져오서 사용하다.
+				name [0].InnerText = "DQ";
+				name [1].InnerText = "OB";
+				Debug.Log ("name01 = " + name[0] + "name02 = " + name[1]);
+			}
+
+			else if (a == 3) {
+				//하나의 요소에 접근해서 한개만 바꾸기..킬카운트에 접근해서. 킬 카운트 수를 놀리기.
+				XmlNodeList killCount = xmldoc.GetElementsByTagName ("MONSTERKILLCOUNT");
+				killCount[0].InnerText = "1000";
+			}
+
+			//전체 가져오기..
+			XmlNodeList nodes1 = xmldoc.SelectNodes ("dataroot/Node");
+			
+			//string s = "";
+			foreach (XmlNode node in nodes1) {
+
+				Debug.Log ("업데이트 후");
+				Debug.Log ("ID: " + node.SelectSingleNode ("ID").InnerText);
+				Debug.Log ("NAME: " + node.SelectSingleNode ("NAME").InnerText);
+				Debug.Log ("LEVEL: " + node.SelectSingleNode ("LEVEL").InnerText);
+				Debug.Log ("GOLD: " + node.SelectSingleNode ("GOLD").InnerText);
+				Debug.Log ("MONSTERKILLCOUNT: " + node.SelectSingleNode ("MONSTERKILLCOUNT").InnerText);
+				
+			}
+
 			xmldoc.Save(filepath);
 			Debug.Log("UpdateXml OK!");
 		}
@@ -117,4 +132,27 @@ public class GameManager : MonoBehaviour {
 
 
 
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

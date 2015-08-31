@@ -2,14 +2,14 @@
 <dataroot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Node>
     <ID>1</ID>
-    <NAME>A</NAME>
+    <NAME>DQ</NAME>
     <LEVEL>1</LEVEL>
     <GOLD>1</GOLD>
-    <MONSTERKILLCOUNT>1</MONSTERKILLCOUNT>
+    <MONSTERKILLCOUNT>1000</MONSTERKILLCOUNT>
   </Node>
   <Node>
     <ID>2</ID>
-    <NAME>b</NAME>
+    <NAME>OB</NAME>
     <LEVEL>2</LEVEL>
     <GOLD>2</GOLD>
     <MONSTERKILLCOUNT>2</MONSTERKILLCOUNT>

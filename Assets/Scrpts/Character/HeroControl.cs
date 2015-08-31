@@ -11,6 +11,8 @@ public class HeroControl : Character {
 	[HideInInspector]
 	public int mAttackPower;
 
+	public float CriticalRate;
+
 	//공속 
 	public float mAttackSpeed;
 
@@ -87,39 +89,34 @@ public class HeroControl : Character {
 	public void DamagedTest(int damage){
 		mAnimator.SetTrigger("Damaged");
 		
-		Debug.Log ("hitted --> "+gameObject.name);
+		//Debug.Log ("hitted --> "+gameObject.name);
 		
 		saveDamageTextForShow = damage;
 		mIn_GameManager.mIngTextMassage.text = "적에게 데미지:" + saveDamageTextForShow + "를 주었다.";
 		
 		hptext.text = mHP.ToString ();
-		Debug.Log ("last hp ="+mHP);
+		//Debug.Log ("last hp ="+mHP);
 		
 	}
 
 	public int GetRandomDamage(){
+
 		return mAttackPower + Random.Range(-10, 10);
 	}
 
-	//데미지 처리..
-	public void heroAttackedMonsterNormal(int damage){
-
-		mHP -= damage;
-
-		hptext.text = mHP.ToString ();
-
-		if (mHP > 0) {
-			mAnimator.SetTrigger("Damaged");
-		}
-
-		if (mHP <= 0) {
-			mAnimator.SetTrigger("Dead");
+	public void DeadTest(){
+		
+		if (mStatus !=Status.Dead) {
 			mStatus = Status.Dead;
 			mHP = 0;
-			hptext.text = "Dead";
-			mHeroSingleTargeted = false;
-			mIn_GameManager.GameOver();
-
+			hptext.text = mHP.ToString ();
+			mIn_GameManager.mIngTextMassage.text = "Player Dead.";
+			mAnimator.SetTrigger("Dead");
+			
+			
+		}
+		else if (mStatus == Status.Dead) {
+			Debug.Log("Already Die");
 		}
 	}
 }

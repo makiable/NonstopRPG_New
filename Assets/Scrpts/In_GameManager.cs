@@ -23,6 +23,9 @@ public class In_GameManager : MonoBehaviour {
 
 	//텍스트 메세지.
 	public TextMesh mIngTextMassage;
+	public TextMesh killMonster;
+	public TextMesh getGold;
+
 	
 
 	//오토 타겟 몬스터 참조. 1명을 잡을때
@@ -48,8 +51,6 @@ public class In_GameManager : MonoBehaviour {
 	//몬스터가 드랍하는 골드 설정..
 	public ulong monsterDropGold;
 
-
-
 	public enum StageStatus
 	{
 		Idle,
@@ -69,6 +70,9 @@ public class In_GameManager : MonoBehaviour {
 		mMonster01.Clear();
 		// 던전 탐험 스텝을 만들어서 순서대로 순환시킵니다.
 		StartCoroutine ("AutoStep");
+
+		//플레이어 정보 초기화. 나중에 없어져야 함.
+		PlayerPrefs.SetInt ("MonsterKillCount", 0 );
 
 	}
 	
@@ -124,7 +128,7 @@ public class In_GameManager : MonoBehaviour {
 	private void SpawnMonster(int idx)
 	{
 		// Resources 폴더로부터 Monster 프리팹(Prefab)을 로드합니다.
-		Object prefab = Resources.Load("Monster01");
+		Object prefab = Resources.Load("Monster02");
 
 		// 참조한 프리팹을 인스턴스화 합니다. (화면에 나타납니다.)
 		GameObject monster = Instantiate(prefab, mSpwanPoint[idx].position, Quaternion.identity) as GameObject;
@@ -170,18 +174,26 @@ public class In_GameManager : MonoBehaviour {
 
 	public void TapAttack(){ //모든 적을 공격하는 광역 공격.
 		
-		StopCoroutine("HeroAutoAttack");
+		//StopCoroutine("HeroAutoAttack");
 
 		Debug.Log ("사용 전 현재 몇마리 남음? = "+mMonsterCount);
 		
 		while (mStageStatus == StageStatus.Battle) {
 			GetSingleAutoTarget ();
-			mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower), TargetMonster);
+
+			if (mHero01.CriticalRate < Random.Range(0,100)) {
+				mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower * 2), TargetMonster);
+				Debug.Log("it's Critical");
+			}
+			else {
+				mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower), TargetMonster);
+			}
+
 			Debug.Log("TapAttack");
 
 			break;
 		}
-		Invoke ("WaitAndStartCoroutine", 0.5f);
+		//Invoke ("WaitAndStartCoroutine", 0.5f);
 	}
 
 
@@ -221,15 +233,14 @@ public class In_GameManager : MonoBehaviour {
 		if (mStageStatus == StageStatus.Battle) {
 			TargetMonster = mMonster01.Where (m => m.TargetNumber > 0).OrderBy (m => m.TargetNumber).First ();
 			TargetMonster.SetSingleTarget ();
-		} else
-			Debug.Log ("not in battle");
+		} else{
+			//Debug.Log ("not in battle");
+		}
 	}
 
 	public void ReAutoTarget(){
 
 		mMonsterCount -= 1;
-
-
 
 		if (mMonsterCount == 0) {
 			//한 스테이지 클리어 
@@ -248,6 +259,7 @@ public class In_GameManager : MonoBehaviour {
 
 				mStageStatus = StageStatus.Clear;
 				GameOver();
+
 				return;
 			}
 

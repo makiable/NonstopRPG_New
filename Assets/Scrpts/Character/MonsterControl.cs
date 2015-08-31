@@ -85,11 +85,11 @@ public class MonsterControl : Character {
 	{
 		//1.HP 넣고, 2. 백그라운드 컴퍼넌트 넣고, 3. 활이 발사될 장소를 넣고. 스타트
 		mHP = mOrinHP;
-		Debug.Log ("mOrinHP= " + mOrinHP);
+		//Debug.Log ("mOrinHP= " + mOrinHP);
 
 		mHP += Random.Range(-10, 10);    
 
-		Debug.Log ("hp is = "+ mHP);
+		//Debug.Log ("hp is = "+ mHP);
 	}
 
 	public void SetSingleTarget(){
@@ -108,33 +108,45 @@ public class MonsterControl : Character {
 	public void DamagedTest(int damage){
 		mAnimator.SetTrigger("Damaged");
 
-		Debug.Log ("hitted --> "+gameObject.name);
+		//Debug.Log ("hitted --> "+gameObject.name);
 				
 		saveDamageTextForShow = damage;
 		mIn_GameManager.mIngTextMassage.text = "적에게 데미지:" + saveDamageTextForShow + "를 주었다.";
 		
 		hptext.text = mHP.ToString ();
-		Debug.Log ("last hp ="+mHP);
+		//Debug.Log ("last hp ="+mHP);
 
 	}
 
 	public void DeadTest(){
-		mStatus = Status.Dead;
-		mHP = 0;
-		hptext.text = mHP.ToString ();
-		mIn_GameManager.mIngTextMassage.text = "적을 물리쳤다.";
-		SingleTargeted = false;
-		AllTargeted = false;
-		mAnimator.SetTrigger("Dead");
-		TargetNumber = -1; //더이상 타겟이 아님요...
-		Debug.Log("Dead ->"+gameObject.name);
-		mIn_GameManager.ReAutoTarget();
+
+		if (mStatus !=Status.Dead) {
+			mStatus = Status.Dead;
+			mHP = 0;
+			hptext.text = mHP.ToString ();
+			mIn_GameManager.mIngTextMassage.text = "적을 물리쳤다.";
+			SingleTargeted = false;
+			AllTargeted = false;
+			mAnimator.SetTrigger("Dead");
+			TargetNumber = -1; //더이상 타겟이 아님요...
+			//Debug.Log("Dead ->"+gameObject.name);
+			mIn_GameManager.ReAutoTarget();
+
+
+			int tempkill = PlayerPrefs.GetInt ("MonsterKillCount");
+			PlayerPrefs.SetInt ("MonsterKillCount", tempkill + 1 );
+			//Debug.Log("현재 킬카운트 = "+PlayerPrefs.GetInt("MonsterKillCount"));
+
+			mIn_GameManager.killMonster.text = PlayerPrefs.GetInt("MonsterKillCount").ToString();
+
+
+		}
+		else if (mStatus == Status.Dead) {
+			//Debug.Log("Already Die");
+		}
 	}
 
 	void destroy(){
-
 		Destroy (gameObject);
-		//mIn_GameManager.mMonsterCount -= 1;
-		Debug.Log ("mMonsterCount = " + mIn_GameManager.mMonsterCount);
 	}
 }
