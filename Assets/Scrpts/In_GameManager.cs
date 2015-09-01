@@ -26,6 +26,10 @@ public class In_GameManager : MonoBehaviour {
 	public TextMesh killMonster;
 	public TextMesh getGold;
 
+
+	//스킬 버튼
+	public CoolTimeButton Skill01;
+
 	
 
 	//오토 타겟 몬스터 참조. 1명을 잡을때
@@ -237,6 +241,12 @@ public class In_GameManager : MonoBehaviour {
 			//Debug.Log ("not in battle");
 		}
 	}
+
+	public void CoolTimeReset(){
+	
+		Skill01.ResetCooltime ();
+	}
+
 
 	public void ReAutoTarget(){
 

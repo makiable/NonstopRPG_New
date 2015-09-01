@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scrpts\PlayerLocal_info.cs" />
      <Compile Include="Assets\Scrpts\Simple_Button_Input.cs" />
      <Compile Include="Assets\Scrpts\Skill_normal_Attack.cs" />
+     <Compile Include="Assets\Scrpts\UI\CoolTimeButton.cs" />
      <Compile Include="Assets\Scrpts\Weapon\All_Weapon_World.cs" />
      <Compile Include="Assets\Scrpts\Weapon\Weapon_Basic_Info.cs" />
      <Compile Include="Assets\Scrpts\Weapon\move_Script.cs" />
