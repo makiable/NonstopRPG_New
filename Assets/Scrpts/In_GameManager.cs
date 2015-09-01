@@ -5,56 +5,54 @@ using System.Collections.Generic;
 
 public class In_GameManager : MonoBehaviour {
 
-	//플레이어 돈 스크립트..
+	//플레이어 관련 스크립트..
 	public PlayerLocal_info mPlayerLocal_info;
 
 	//히어로 컨트롤.
 	public HeroControl mHero01;
 
-	//몬스터 컨트롤 
-	[HideInInspector]
-	public List<MonsterControl> mMonster01;
-
-	//모든 이팩트 컨트롤.
-	public EffectControl_World totalEffectControl;
+	//스킬 클타임 버튼 - 히어로에게서 나옴.
+	public CoolTimeButton Skill01; //전체 공격 
+	public CoolTimeButton Skill02; //연속 공격.
 
 	//노말 공격 컨트롤
 	public Skill_normal_Attack mNormalSkill;
 
+
+	//몬스터 컨트롤 
+	[HideInInspector]
+	public List<MonsterControl> mMonster01;
+
+	//오토 타겟 몬스터 참조. 1명을 잡을때
+	[HideInInspector]
+	public MonsterControl TargetMonster;
+	public MonsterControl[] AllTargetMonster;
+	private int monsterSpwanNumber = 3;
+	
+	// 몬스터 출연 위치.
+	public Transform[] mSpwanPoint;
+
+	//몬스터가 드랍하는 골드 설정..
+	public ulong monsterDropGold;
+
+	//EFFECT
+	//모든 이팩트 컨트롤.
+	public EffectControl_World totalEffectControl;
+	
+	//UI
 	//텍스트 메세지.
 	public TextMesh mIngTextMassage;
 	public TextMesh killMonster;
 	public TextMesh getGold;
 
 
-	//스킬 버튼
-	public CoolTimeButton Skill01;
-
-	
-
-	//오토 타겟 몬스터 참조. 1명을 잡을때
-	[HideInInspector]
-	public MonsterControl TargetMonster;
-
-	public MonsterControl[] AllTargetMonster;
-
-	private int monsterSpwanNumber = 3;
-
-	// 몬스터 출연 위치.
-	public Transform[] mSpwanPoint;
-	
+	// 던전 인포.
 	// 던전을 탐험하는 횟수입니다.
 	public int mLoopCount;
-	
 	// 화면에 나타난 적의 합
 	public int mMonsterCount = 0;
-
-	// 얼마만큼 뛰다가 적을 만날 것인지.
-	//private float mRunTime = 1.8f;
-
-	//몬스터가 드랍하는 골드 설정..
-	public ulong monsterDropGold;
-
+	
+	//스테이지 상황.
 	public enum StageStatus
 	{
 		Idle,
@@ -84,7 +82,7 @@ public class In_GameManager : MonoBehaviour {
 	void Update () {
 
 	}
-	
+
 
 	IEnumerator AutoStep()
 	{
@@ -132,7 +130,7 @@ public class In_GameManager : MonoBehaviour {
 	private void SpawnMonster(int idx)
 	{
 		// Resources 폴더로부터 Monster 프리팹(Prefab)을 로드합니다.
-		Object prefab = Resources.Load("Monster02");
+		Object prefab = Resources.Load("Monster01");
 
 		// 참조한 프리팹을 인스턴스화 합니다. (화면에 나타납니다.)
 		GameObject monster = Instantiate(prefab, mSpwanPoint[idx].position, Quaternion.identity) as GameObject;
@@ -172,6 +170,9 @@ public class In_GameManager : MonoBehaviour {
 		}
 	}
 
+
+	//사용자 공격 관련
+
 	public int GetRandomDamage(int damage){
 		return damage + Random.Range(-10, 10);
 	}
@@ -200,12 +201,9 @@ public class In_GameManager : MonoBehaviour {
 		//Invoke ("WaitAndStartCoroutine", 0.5f);
 	}
 
-
-
-
 	public void HeroSkillAttack01(){ //모든 적을 공격하는 광역 공격.
 
-		StopCoroutine("HeroAutoAttack");
+		//StopCoroutine("HeroAutoAttack");
 
 		Debug.Log ("사용 전 현재 몇마리 남음? = "+mMonsterCount);
 
@@ -219,8 +217,40 @@ public class In_GameManager : MonoBehaviour {
 			Debug.Log (" 스킬 사용 후 현재 몇마리 남음? = "+mMonsterCount);
 			break;
 		}
-		Invoke ("WaitAndStartCoroutine", 1.2f);
+		//Invoke ("WaitAndStartCoroutine", 1.2f);
 	}
+
+	public void HeroSkillAttack02(){ //자동으로 연속 공격 하는 스킬.
+		if (mStageStatus == StageStatus.Battle) {
+
+			//StopCoroutine("HeroAutoAttack");
+
+
+			StartCoroutine("HeroSerialAttack");
+			}
+		float a = Skill02.runtime;
+		Invoke("StopSkill2",a);
+	}
+
+	IEnumerator HeroSerialAttack(){
+		while (mStageStatus == StageStatus.Battle) {
+			GetSingleAutoTarget ();
+			
+			if (mHero01.CriticalRate < Random.Range(0,100)) {
+				mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower * 2), TargetMonster);
+				Debug.Log("it's Critical");
+			}
+			else {
+				mNormalSkill.normalHit(mHero01, GetRandomDamage(mHero01.mAttackPower), TargetMonster);
+			}
+			Debug.Log("Skill2 Serise Attack");
+			yield return new WaitForSeconds (0.2f);
+		}
+	}
+	public void StopSkill2(){
+		StopCoroutine ("HeroSerialAttack");
+	}
+	
 
 	void WaitAndStartCoroutine(){
 		StartCoroutine("HeroAutoAttack");
@@ -247,6 +277,10 @@ public class In_GameManager : MonoBehaviour {
 		Skill01.ResetCooltime ();
 	}
 
+	public void CoolTimeReset2 (){
+		Skill02.ResetCooltime ();
+
+	}
 
 	public void ReAutoTarget(){
 
@@ -305,9 +339,7 @@ public class In_GameManager : MonoBehaviour {
 			}
 		}
 	}
-
 	
-
 	private void GetMonsterSingleAutoTarget(){
 
 		//지금은 한명이니, 1인에가 타겟임..

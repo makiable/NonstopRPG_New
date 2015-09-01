@@ -1,16 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scrpts\In_GameManager.cs">
     <Files>
-      <File FileName="Assets\Scrpts\UI\CoolTimeButton.cs" Line="9" Column="20" />
-      <File FileName="Assets\Scrpts\In_GameManager.cs" Line="36" Column="19" />
-      <File FileName="Assets\Scrpts\Character\MonsterControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\Character\HeroControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\Weapon\All_Weapon_World.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\Weapon\move_Script.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\Weapon\Weapon_Basic_Info.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\AllSkill_World.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scrpts\Skill_normal_Attack.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scrpts\In_GameManager.cs" Line="9" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

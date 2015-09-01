@@ -13,6 +13,13 @@ public class CoolTimeButton : MonoBehaviour {
 	float leftTime = 60.0f;
 	public Text lefttimetext;
 
+	//실행하게 되면 해당 초 동안(Runtime)동안 작동..
+	public bool notUseRuntime;
+	public float runtime = 10.0f;
+	public float setRuntime;
+	public bool isRuntime = false;
+	public Text runtimeText;
+
 	
 	// Use this for initialization
 	void Start () {
@@ -26,6 +33,14 @@ public class CoolTimeButton : MonoBehaviour {
 		if (disableOnStart) {
 			ResetCooltime();
 		}
+
+		if (notUseRuntime == true) {
+			runtimeText.text = "";
+		} else {
+			runtimeText.text = "Ready";
+			setRuntime = runtime;
+		}
+
 	}
 	
 	// Update is called once per frame
@@ -48,6 +63,22 @@ public class CoolTimeButton : MonoBehaviour {
 				img.fillAmount = ratio;
 			}
 		}
+
+		if (notUseRuntime != true) {
+			if (isRuntime == true) {
+				runtime -=Time.deltaTime;
+				runtimeText.text = ((int)runtime).ToString(); //초만 출력 
+				if (runtime <= 0) {
+					isRuntime = false;
+					runtimeText.text = "Ready";
+					runtime = setRuntime;
+				}
+			}
+		}
+	}
+
+	public void On_Runtime(){
+		isRuntime = true;
 	}
 
 	public bool CheckCooltime(){
