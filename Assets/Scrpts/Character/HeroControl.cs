@@ -90,7 +90,6 @@ public class HeroControl : Character {
 		mAnimator.SetTrigger("Damaged");
 		
 		//Debug.Log ("hitted --> "+gameObject.name);
-		
 		saveDamageTextForShow = damage;
 		mIn_GameManager.mIngTextMassage.text = "적에게 데미지:" + saveDamageTextForShow + "를 주었다.";
 		

@@ -2,8 +2,13 @@ using UnityEngine;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
+using System.IO; 
 
 public class In_GameManager : MonoBehaviour {
+
+	//외부 파일 관련.xml 컨트롤러를 하나 만들자.
+	public XmlController mXmlController;
 
 	//플레이어 관련 스크립트..
 	public PlayerLocal_info mPlayerLocal_info;
@@ -75,6 +80,12 @@ public class In_GameManager : MonoBehaviour {
 
 		//플레이어 정보 초기화. 나중에 없어져야 함.
 		PlayerPrefs.SetInt ("MonsterKillCount", 0 );
+
+		//mXmlController.Monster_Xml_Load (1);
+		//mXmlController.Xml_Load ("xml_Test_01");
+		//mXmlController.Monster_Xml_Load("Monster_Respwan_Data");
+		mXmlController.Test_Monster_ID_Xml_Load ("Monster_Respwan_Data", 1);
+
 
 	}
 	
@@ -204,7 +215,6 @@ public class In_GameManager : MonoBehaviour {
 	public void HeroSkillAttack01(){ //모든 적을 공격하는 광역 공격.
 
 		//StopCoroutine("HeroAutoAttack");
-
 		Debug.Log ("사용 전 현재 몇마리 남음? = "+mMonsterCount);
 
 		while (mStageStatus == StageStatus.Battle) {
@@ -222,10 +232,7 @@ public class In_GameManager : MonoBehaviour {
 
 	public void HeroSkillAttack02(){ //자동으로 연속 공격 하는 스킬.
 		if (mStageStatus == StageStatus.Battle) {
-
 			//StopCoroutine("HeroAutoAttack");
-
-
 			StartCoroutine("HeroSerialAttack");
 			}
 		float a = Skill02.runtime;
